@@ -23,18 +23,20 @@ This simple plugin gives you the ability of setting the systems wallpaper, eithe
 4. [Supported Platforms](#supported-platforms)
 
 ## Installation
-stable npm package:
-```
-cordova plugin add cordova-plugin-wallpaper
 ```
 
 maybe unstable GitHub-repository:
 ```
-cordova plugin add https://github.com/fbsanches/cordova-plugin-wallpaper.git
+cordova plugin add https://github.com/huangtheng/cordova-plugin-wallpaper.git
 ```
 
 ## Usage
 ### Function(s)
+#### setImage to Locck Screen
+Sets image under given path as systems background image:
+```javascript
+window.plugins.wallpaper.setImageLock(string /* image path */);
+```
 #### setImage
 Sets image under given path as systems background image:
 ```javascript
