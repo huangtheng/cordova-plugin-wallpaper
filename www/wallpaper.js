@@ -19,6 +19,25 @@ wallpaper.prototype.setImage = function(image, callback) {
         cordova.exec(successCallback, errorCallback, services, action, dependentProperties);
     }
 };
+wallpaper.prototype.setImageLock = function(image, callback) {
+    var services = "wallpaper";
+    var dependentProperties = [];
+    dependentProperties.push(image, false);
+
+    var successCallback = function() {
+      typeof callback === 'function' && callback();
+    };
+
+    var errorCallback = function(error) {
+      var errorBack = error || 'unknown cordova error when setting wallpaper';
+      typeof callback === 'function' && callback(errorBack);
+    };
+
+    var action = "startlock"; //future actions new entries. Fixed.
+    if (image) {
+        cordova.exec(successCallback, errorCallback, services, action, dependentProperties);
+    }
+};
 
 function setBase64(base64, callback) {
     var services = "wallpaper";

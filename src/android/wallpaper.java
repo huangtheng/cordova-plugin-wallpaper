@@ -36,6 +36,16 @@ public class wallpaper extends CordovaPlugin
 			callbackContext.sendPluginResult(pr);
 			return true;
 		}
+		if (action.equals("startlock"))
+		{
+			imgSrc = args.getString(0);
+			base64 = args.getBoolean(1);
+			this.echoLock(imgSrc, base64, context);
+			PluginResult pr = new PluginResult(PluginResult.Status.OK);
+			pr.setKeepCallback(true);
+			callbackContext.sendPluginResult(pr);
+			return true;
+		}
 		callbackContext.error("Set wallpaper is not a supported.");
         	return false;
 	}
@@ -58,6 +68,32 @@ public class wallpaper extends CordovaPlugin
 			}
 			WallpaperManager myWallpaperManager = WallpaperManager.getInstance(context);
 			myWallpaperManager.setBitmap(bitmap);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void echoLock(String image, Boolean base64, Context context)
+	{
+		try
+		{
+			AssetManager assetManager = context.getAssets();
+			Bitmap bitmap;
+			if(base64) //Base64 encoded
+			{
+				byte[] decoded = android.util.Base64.decode(image, android.util.Base64.DEFAULT);
+				bitmap = BitmapFactory.decodeByteArray(decoded, 0, decoded.length);
+			}
+			else //normal path
+			{
+				InputStream instr = assetManager.open("www/" + image);
+				bitmap = BitmapFactory.decodeStream(instr);
+			}
+			WallpaperManager myWallpaperManager = WallpaperManager.getInstance(context);
+			//myWallpaperManager.setBitmap(bitmap);
+			myWallpaperManager.setBitmap (bitmap, null, true, WallpaperManager.FLAG_LOCK);
 		}
 		catch (IOException e)
 		{
